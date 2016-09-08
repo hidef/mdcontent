@@ -10,6 +10,17 @@ function buildLink(path, filename) {
     return '<a href="' + path + '/' + filename+ '">' + filename + '</a>';
 }
 
+function buildBackLink(currentPath)
+{
+    if ( currentPath == '/' || currentPath == '/index.md') return '';
+    else return '<h2><a href="..">Up</a></h2>';
+}
+
+function buildTitle(currentPath)
+{
+    return '<h1>' + currentPath + '</h1>';
+}
+
 app.use(function (req, res, next) {
     var sourceFilePath = workingDirectory + decodeURI(req.originalUrl);
     if ( sourceFilePath.endsWith('/') ) sourceFilePath += 'index.md';
@@ -23,7 +34,9 @@ app.use(function (req, res, next) {
                         res.send(JSON.stringify(err2));
                         next();
                     } else {
-                        res.send('<h2><a href="..">Back</a></h2></br>' + files.map(buildLink.bind(null, decodeURI(req.originalUrl))).join('<br />'));
+                        res.send(buildTitle(decodeURI(req.originalUrl)) + '<br />' +
+                        buildBackLink(decodeURI(req.originalUrl)) + '</br>' + 
+                        files.map(buildLink.bind(null, decodeURI(req.originalUrl))).join('<br />'));
                         next();
                     }
                 });
