@@ -9,10 +9,12 @@ var workingDirectory = process.env.workingDirectory || '/Users/robert.stiff/Drop
 
 function buildListing(originalUrl, files) {
     if (originalUrl.endsWith('/')) originalUrl = originalUrl.substr(0, originalUrl.length - 1);
+    var title = originalUrl.substr(originalUrl.lastIndexOf('/'));
     return dots.listing({
         originalUrl: originalUrl,
         showUpLink: originalUrl != '',
-        files: files
+        files: files,
+        title: title
     });
 }
 app.use('/_public/', express.static('public'));
@@ -39,9 +41,14 @@ app.use(function (req, res, next) {
                 next();
             }
         } else {
+            var content = data.toString('utf8');
+            var title = content.substr(0, content.indexOf('\n'));
+            var body = content.substr(content.indexOf('\n'));
+            console.log(title);
             res.send(dots.page({ 
-                content: marked(data.toString('utf8')),
-                originalUrl: decodeURI(req.originalUrl)            
+                content: marked(body),
+                originalUrl: decodeURI(req.originalUrl),
+                title: marked(title)
             }));
             next();
         }

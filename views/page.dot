@@ -3,12 +3,19 @@
 <div class="main">
     <div class="main--header">
         <h1>
-            {{=it.originalUrl}}
+            {{=it.title}}
         </h1>
     </div>
     <div class="main--content">
         <h2><a href="..">Up</a></h2>
         {{=it.content}}
     </div>
-    <div class="main--footer">mdserve 1.0.0</div>
+    <div class="main--footer">
+        <div class="main--footer--brand-label">
+            mdserve 1.0.0
+        </div>
+        <div class="main--footer--page-details">
+            {{=it.originalUrl}}
+        </div>
+    </div>
 </div>
