@@ -17,7 +17,9 @@ function buildListing(originalUrl, files) {
         title: title
     });
 }
+
 app.use('/_public/', express.static('public'));
+
 app.use(function (req, res, next) {
     var sourceFilePath = workingDirectory + decodeURI(req.originalUrl);
     if (sourceFilePath.endsWith('/')) sourceFilePath += 'index.md';

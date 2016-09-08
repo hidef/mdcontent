@@ -5,9 +5,9 @@
         <h1>
             {{=it.title}}
         </h1>
+        <a href="..">Up</a>
     </div>
     <div class="main--content">
-        <h2><a href="..">Up</a></h2>
         {{=it.content}}
     </div>
     <div class="main--footer">

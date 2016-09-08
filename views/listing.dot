@@ -5,6 +5,9 @@
         <h1>
             {{=it.title}}
         </h1>
+        {{?it.showUpLink}}
+            <a href="..">Up</a>
+        {{?}}
     </div>
     <div class="main--content">
         <ul>
