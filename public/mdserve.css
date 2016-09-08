@@ -1,0 +1,27 @@
+html, body, ul {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    background-color: #FAFAFA;
+}
+
+.main {
+    font-family: 'Roboto', sans-serif;
+}
+
+.main--header {
+    border: 0px solid #DDD;
+    border-bottom-width: 1px;
+    padding: 1em 20% 1em 20%;
+}
+
+.main--content {
+    padding: 1em 20% 1em 20%;
+    background-color: white
+}
+
+.main--footer {
+    padding: 1em 20% 1em 20%;
+    border: 0px solid #DDD;
+    border-top-width: 1px;
+}

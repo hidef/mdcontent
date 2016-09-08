@@ -1,27 +1,29 @@
-var express = require ('express');
+var express = require('express');
 var app = express();
 var fs = require('fs');
 var marked = require('marked');
-var dots = require("dot").process({path: "./views"});
+var dots = require("dot").process({ path: "./views" });
 
 var workingDirectory = process.env.workingDirectory || '/Users/robert.stiff/Dropbox/Notes';
 
 
 function buildListing(originalUrl, files) {
-    if ( originalUrl.endsWith ('/') ) originalUrl = originalUrl.substr(0, originalUrl.length - 1);
-    return dots.listing({originalUrl:originalUrl,
+    if (originalUrl.endsWith('/')) originalUrl = originalUrl.substr(0, originalUrl.length - 1);
+    return dots.listing({
+        originalUrl: originalUrl,
         showUpLink: originalUrl != '',
-        files: files});
+        files: files
+    });
 }
-
+app.use('/_public/', express.static('public'));
 app.use(function (req, res, next) {
     var sourceFilePath = workingDirectory + decodeURI(req.originalUrl);
-    if ( sourceFilePath.endsWith('/') ) sourceFilePath += 'index.md';
-    fs.readFile(sourceFilePath, function(err, data) {
-        if ( err ) {
-            if ( err.code === 'EISDIR' || (err.code == 'ENOENT' && sourceFilePath.endsWith('/index.md'))) {
+    if (sourceFilePath.endsWith('/')) sourceFilePath += 'index.md';
+    fs.readFile(sourceFilePath, function (err, data) {
+        if (err) {
+            if (err.code === 'EISDIR' || (err.code == 'ENOENT' && sourceFilePath.endsWith('/index.md'))) {
                 if (err.code == 'ENOENT' && sourceFilePath.endsWith('/index.md')) sourceFilePath = sourceFilePath.substr(0, sourceFilePath.length - 'index.md'.length);
-                fs.readdir(sourceFilePath, function(err2, files) {
+                fs.readdir(sourceFilePath, function (err2, files) {
                     if (err2) {
                         res.status = 500;
                         res.send(JSON.stringify(err2));
@@ -36,15 +38,18 @@ app.use(function (req, res, next) {
                 res.send(JSON.stringify(err));
                 next();
             }
-        } else { 
-            res.send(marked(data.toString('utf8')));
+        } else {
+            res.send(dots.page({ 
+                content: marked(data.toString('utf8')),
+                originalUrl: decodeURI(req.originalUrl)            
+            }));
             next();
         }
     });
 });
 
 var port = process.env.PORT || 3000;
-app.listen(port, function(){
+app.listen(port, function () {
     console.log('Listening on port ' + port);
 });
 
