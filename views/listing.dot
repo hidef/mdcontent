@@ -1,0 +1,11 @@
+<h1>
+    {{=it.originalUrl}}
+</h1>
+{{? it.showUpLink }}
+    <h2><a href="..">Up</a></h2>
+{{?}}
+<ul>
+    {{~it.files :value:index}}
+        <li><a href="{{=it.originalUrl}}/{{=value}}">{{=value}}</a></li>
+    {{~}}
+<ul>

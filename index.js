@@ -2,23 +2,16 @@ var express = require ('express');
 var app = express();
 var fs = require('fs');
 var marked = require('marked');
+var dots = require("dot").process({path: "./views"});
 
 var workingDirectory = process.env.workingDirectory || '/Users/robert.stiff/Dropbox/Notes';
 
-function buildLink(path, filename) {
-    if ( path.endsWith ('/') ) path = path.substr(0, path.length - 1);
-    return '<a href="' + path + '/' + filename+ '">' + filename + '</a>';
-}
 
-function buildBackLink(currentPath)
-{
-    if ( currentPath == '/' || currentPath == '/index.md') return '';
-    else return '<h2><a href="..">Up</a></h2>';
-}
-
-function buildTitle(currentPath)
-{
-    return '<h1>' + currentPath + '</h1>';
+function buildListing(originalUrl, files) {
+    if ( originalUrl.endsWith ('/') ) originalUrl = originalUrl.substr(0, originalUrl.length - 1);
+    return dots.listing({originalUrl:originalUrl,
+        showUpLink: originalUrl != '',
+        files: files});
 }
 
 app.use(function (req, res, next) {
@@ -34,9 +27,7 @@ app.use(function (req, res, next) {
                         res.send(JSON.stringify(err2));
                         next();
                     } else {
-                        res.send(buildTitle(decodeURI(req.originalUrl)) + '<br />' +
-                        buildBackLink(decodeURI(req.originalUrl)) + '</br>' + 
-                        files.map(buildLink.bind(null, decodeURI(req.originalUrl))).join('<br />'));
+                        res.send(buildListing(decodeURI(req.originalUrl), files));
                         next();
                     }
                 });
