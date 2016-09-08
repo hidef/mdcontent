@@ -44,7 +44,6 @@ app.use(function (req, res, next) {
             var content = data.toString('utf8');
             var title = content.substr(0, content.indexOf('\n'));
             var body = content.substr(content.indexOf('\n'));
-            console.log(title);
             res.send(dots.page({ 
                 content: marked(body),
                 originalUrl: decodeURI(req.originalUrl),
