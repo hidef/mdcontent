@@ -11,7 +11,7 @@ function buildLink(path, filename) {
 }
 
 app.use(function (req, res, next) {
-    var sourceFilePath = workingDirectory + req.originalUrl;
+    var sourceFilePath = workingDirectory + decodeURI(req.originalUrl);
     if ( sourceFilePath.endsWith('/') ) sourceFilePath += 'index.md';
     fs.readFile(sourceFilePath, function(err, data) {
         if ( err ) {
@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
                         res.send(JSON.stringify(err2));
                         next();
                     } else {
-                        res.send('<h2><a href="..">Back</a></h2></br>' + files.map(buildLink.bind(null, req.originalUrl)).join('<br />'));
+                        res.send('<h2><a href="..">Back</a></h2></br>' + files.map(buildLink.bind(null, decodeURI(req.originalUrl))).join('<br />'));
                         next();
                     }
                 });
