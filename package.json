@@ -11,6 +11,7 @@
   "dependencies": {
     "dot": "^1.0.3",
     "express": "4.14.0",
-    "marked": "^0.3.6"
+    "marked": "^0.3.6",
+    "remove-markdown": "^0.1.0"
   }
 }

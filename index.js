@@ -3,6 +3,7 @@ var app = express();
 var fs = require('fs');
 var marked = require('marked');
 var dots = require("dot").process({ path: "./views" });
+var removeMd = require('remove-markdown');
 
 var workingDirectory = process.env.workingDirectory || '/Users/robert.stiff/Dropbox/Notes';
 
@@ -49,7 +50,7 @@ app.use(function (req, res, next) {
             res.send(dots.page({ 
                 content: marked(body),
                 originalUrl: decodeURI(req.originalUrl),
-                title: marked(title)
+                title: removeMd(title),
             }));
             next();
         }
