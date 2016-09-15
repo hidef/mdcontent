@@ -47,3 +47,34 @@ body {
 ul {
     padding-left: 1em;
 }
+
+td, th, tf {
+    border: 1px solid #DDD;
+    padding: 6px 13px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+h2 {
+    border: 0px solid #DDD;
+    border-bottom-width: 1px;
+}
+
+tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+tr {
+    background-color: white;
+}
+th {
+    font-weight: bolder;
+}
+
+code {
+    border: 1px solid #EAEAEA;
+    background-color: #F8F8F8;
+    padding: 2px;
+    border-radius: 1px;
+}
