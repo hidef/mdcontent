@@ -14,13 +14,18 @@
             <a href="..">Up</a>
         {{?}}
     </div>
-    <div class="main--content">
+    <div class="main--listing">
         <ul>
             {{~it.files :value:index}}
                 <li><a href="{{=it.originalUrl}}/{{=value}}">{{=value}}</a></li>
             {{~}}
         <ul>
     </div>
+    {{?it.showContent}}
+        <div class="main--content">
+            {{=it.content}}
+        </div>
+    {{?}}
     <div class="main--footer">
         <div class="main--footer--brand-label">
             mdserve 1.0.0
