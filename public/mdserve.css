@@ -75,6 +75,14 @@ th {
 code {
     border: 1px solid #EAEAEA;
     background-color: #F8F8F8;
-    padding: 2px;
-    border-radius: 1px;
+    padding: 0.25em;
+    border-radius: 0.5em;
+}
+
+pre code {
+    border: 1px solid #EAEAEA;
+    background-color: #F8F8F8;
+    padding: 1em;
+    border-radius: 0.5em;
+    display: block;
 }
