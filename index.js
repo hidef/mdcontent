@@ -4,6 +4,7 @@ var fs = require('fs');
 var marked = require('marked');
 var dots = require("dot").process({ path: "./views" });
 var removeMd = require('remove-markdown');
+var os = require('os');
 
 var workingDirectory = process.env.workingDirectory || '/Users/robert.stiff/Dropbox/Notes';
 
@@ -22,7 +23,7 @@ function buildListing(originalUrl, files, indexContent) {
         originalUrl: originalUrl,
         showUpLink: originalUrl != '',
         files: files,
-        title: title,
+        title: title || "MDServe: " + os.hostname(),
         showContent: !!body,
         content: body
     });
