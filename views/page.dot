@@ -8,7 +8,7 @@
         <div class="main">
             <div class="main--header">
                 <h1>
-                    {{=it.title}}
+                    {{=it.siteConfig.title}}
                 </h1>
             </div>
             <div class="main--content">

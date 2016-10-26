@@ -52,12 +52,9 @@ recursive(workingDirectory, function (err, files) {
 function renderFile(fileName, data)
 {
     var content = data.toString('utf8');
-    var title = content.substr(0, content.indexOf('\n'));
-    var body = content.substr(content.indexOf('\n'));
     var output = dots.page({
         siteConfig: siteConfig,
-        content: marked(body),
-        title: removeMd(title),
+        content: marked(content),
     });
 
     var outputFileName = 'dist/' + fileName.substr(0, fileName.lastIndexOf(".md")) + '.html';
