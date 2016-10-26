@@ -7,8 +7,8 @@
     "postinstall": "node build.js",
     "start": "node serve.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Robert Stiff <mdcontent@hidefsoftware.co.uk>",
+  "license": "MIT",
   "dependencies": {
     "dot": "^1.0.3",
     "express": "4.14.0",
