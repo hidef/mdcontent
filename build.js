@@ -1,9 +1,12 @@
 var recursive = require('recursive-readdir');
 var marked = require('marked');
-var dots = require("dot").process({ path: "./views" });
 var removeMd = require('remove-markdown');
 var os = require('os');
-var fs = require('fs-extra')
+var fs = require('fs-extra');
+
+var viewDir = (process.argv[2] || '.') + "/views";
+
+var dots = require("dot").process({ path: viewDir });
 
 var workingDirectory = process.env.workingDirectory || 'test-content';
 
