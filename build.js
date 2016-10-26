@@ -4,10 +4,10 @@ var removeMd = require('remove-markdown');
 var os = require('os');
 var fs = require('fs-extra');
 
-var viewDir = (process.argv[2] || '.') + "/views";
-console.log(viewDir);
-var dots = require("dot").process({ path: viewDir });
 
+
+var viewDir = (process.env.viewDir || '.') + "/views";
+var dots = require("dot").process({ path: viewDir });
 var workingDirectory = process.env.workingDirectory || 'test-content';
 
 function includeFoldersAndMdFiles(fileName, stats)
