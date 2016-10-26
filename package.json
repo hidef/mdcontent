@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "postinstall": "node build.js",
+    "start": "node serve.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dot": "^1.0.3",
     "express": "4.14.0",
+    "fs-extra": "^0.30.0",
     "marked": "^0.3.6",
+    "recursive-readdir": "^2.1.0",
     "remove-markdown": "^0.1.0"
   }
 }

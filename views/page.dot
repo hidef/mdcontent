@@ -10,7 +10,6 @@
                 <h1>
                     {{=it.title}}
                 </h1>
-                <a href="{{=it.originalUrl.substr(0, it.originalUrl.lastIndexOf('/'))}}">Up</a>
             </div>
             <div class="main--content">
                 {{=it.content}}
@@ -20,7 +19,7 @@
                     mdserve 1.0.0
                 </div>
                 <div class="main--footer--page-details">
-                    {{=it.originalUrl}}
+                    details
                 </div>
             </div>
         </div>
