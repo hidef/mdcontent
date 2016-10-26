@@ -10,7 +10,25 @@ var viewDir = (process.env.viewDir || '.') + "/views";
 var dots = require("dot").process({ path: viewDir });
 var workingDirectory = process.env.workingDirectory || 'test-content';
 
+
+var siteConfig = JSON.parse(fs.readFileSync(workingDirectory + '/site.json'));
+
+if (fs.existsSync('dist'))
+{
+    fs.removeSync('dist');
+}
+
+function trimLeft(input, trimValue) {
+  var i = 0;
+  while ( input.substr(i, trimValue.length) == trimValue ) {
+    i++;
+  }
+  return input.substr(i + trimValue.length - 1);
+}
+
+
 recursive(workingDirectory, function (err, files) {
+    console.log(workingDirectory);
     if (err) {
         console.log(err);
         process.exit(-1);
@@ -22,7 +40,9 @@ recursive(workingDirectory, function (err, files) {
                     console.log(err);
                     process.exit(-1);
                 } else {
-                    renderFile(f, data);
+                    console.log(f);
+                    console.log(trimLeft(f, workingDirectory + '/'));
+                    renderFile(trimLeft(f, workingDirectory), data);
                 }
             });
         });
@@ -34,7 +54,8 @@ function renderFile(fileName, data)
     var content = data.toString('utf8');
     var title = content.substr(0, content.indexOf('\n'));
     var body = content.substr(content.indexOf('\n'));
-    var output = dots.page({ 
+    var output = dots.page({
+        siteConfig: siteConfig,
         content: marked(body),
         title: removeMd(title),
     });
