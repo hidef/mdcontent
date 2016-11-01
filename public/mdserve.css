@@ -18,6 +18,15 @@ body {
     padding: 1em 20% 1em 20%;
 }
 
+.main--header a {
+    color: black;
+    text-decoration: none;
+}
+
+.main--header a:visited {
+    color: black;
+}
+
 .main--content {
     padding: 1em 20% 1em 20%;
     border: 0px solid #DDD;
