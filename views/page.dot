@@ -21,7 +21,9 @@
                     {{=it.siteConfig.title}}
                 </div>
                 <div class="main--footer--page-details">
-                    
+                    {{?it.siteConfig.copyright}}
+                        Copyright © {{=it.siteConfig.copyright.date}} {{=it.siteConfig.copyright.name}}
+                    {{?}}
                 </div>
             </div>
         </div>
