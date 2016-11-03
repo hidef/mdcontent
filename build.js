@@ -56,7 +56,7 @@ function parseMetadata(metadatastring) {
         if ( line.startsWith('---') ) continue;
         if ( line.length == '0' ) continue;
         var parts = line.split(':');
-        metadata[parts[0]] = parts[1].trim();
+        metadata[parts[0]] = line.substr(parts[0].length + 1).trim();
     }
     return metadata;
 }
