@@ -84,12 +84,12 @@ function splitContent(data) {
 
 function renderFile(fileName, data)
 {
-    var { metaDataChunk, contentChunk } = splitContent(data.toString('utf8'));
-    var parsedMetadata = parseMetadata(metaDataChunk);
+    var chunks = splitContent(data.toString('utf8'));
+    var parsedMetadata = parseMetadata(chunks.metaDataChunk);
 
     var output = dots.page({
         siteConfig: siteConfig,
-        content: marked(contentChunk),
+        content: marked(chunks.contentChunk),
         metadata: parsedMetadata || {}
     });
 
