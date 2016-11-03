@@ -49,13 +49,51 @@ recursive(workingDirectory, function (err, files) {
     }
 });
 
+function parseMetadata(metadatastring) {
+    var lines = metadatastring.split('\n');
+    var metadata = {};
+    for ( var line of lines ) {
+        if ( line.startsWith('---') ) continue;
+        if ( line.length == '0' ) continue;
+        var parts = line.split(':');
+        metadata[parts[0]] = parts[1].trim();
+    }
+    return metadata;
+}
+
+function splitContent(data) {
+    var lines = data.split('\n');
+    var isMetaData = false;
+    var metaDataChunk = '';
+    var contentChunk = '';
+    for ( var line of lines ) {
+        if ( !isMetaData && line.startsWith('---') ) {
+            isMetaData = true;
+        } else if ( isMetaData ) {
+            contentChunk += line + '\n';
+        } else { 
+            metaDataChunk += line + '\n';
+        }
+    }
+    if ( contentChunk == '' )  {
+        contentChunk = metaDataChunk;
+        metaDataChunk = '';
+    }
+    return { metaDataChunk, contentChunk };
+}
+
 function renderFile(fileName, data)
 {
-    var content = data.toString('utf8');
+    var { metaDataChunk, contentChunk } = splitContent(data.toString('utf8'));
+    var parsedMetadata = parseMetadata(metaDataChunk);
+
     var output = dots.page({
         siteConfig: siteConfig,
-        content: marked(content),
+        content: marked(contentChunk),
+        metadata: parsedMetadata || {}
     });
+
+    console.log(parsedMetadata);
 
     var outputFileName = 'dist/' + fileName.substr(0, fileName.lastIndexOf(".md")) + '.html';
     ensureFilePathExists('.', outputFileName);

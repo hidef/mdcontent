@@ -20,6 +20,10 @@
             </div>
             <div class="main--content">
                 {{=it.content}}
+                {{?it.metadata.author}}
+                    <hr />
+                    {{=it.metadata.author}} - {{=it.metadata.date}}
+                {{?}}
             </div>
             <div class="main--footer">
                 <div class="main--footer--brand-label">
