@@ -18,6 +18,12 @@ body {
     padding: 1em 20% 1em 20%;
 }
 
+@media (max-width: 900px) {
+.main--header {
+    padding: 1em;
+  }
+}
+
 .main--header a {
     color: black;
     text-decoration: none;
@@ -34,6 +40,12 @@ body {
     background-color: white
 }
 
+@media (max-width: 900px) {
+.main--content {
+    padding: 1em;
+  }
+}
+
 .main--listing {
     padding: 1em 20% 1em 20%;
     border: 0px solid #DDD;
@@ -45,12 +57,27 @@ body {
     padding: 1em 20% 1em 20%;
 }
 
+@media (max-width: 900px) {
+.main--footer {
+    padding: 1em;
+  }
+}
+
 .main--footer--brand-label {
     float: left;
 }
 
 .main--footer--page-details {
     float: right;
+}
+
+@media (max-width: 900px) {
+.main--footer--brand-label {
+    float: none;
+}
+.main--footer--page-details {
+    float: none;
+  }
 }
 
 ul {
