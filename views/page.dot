@@ -1,9 +1,9 @@
 <html>
     <head>
         <title>
-            {{=it.siteConfig.title}}
-            {{?it.metadata.title}}
-                | {{=it.metadata.title}}
+            {{=it.siteModel.title}}
+            {{?it.pageModel.title}}
+                | {{=it.pageModel.title}}
             {{?}}
         </title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -15,24 +15,24 @@
             <div class="main--header">
                 <a href="/">
                     <h1>
-                        {{=it.siteConfig.title}}
+                        {{=it.siteModel.title}}
                     </h1>
                 </a>
             </div>
             <div class="main--content">
-                {{=it.content}}
-                {{?it.metadata.author}}
+                {{=it.pageModel.content}}
+                {{?it.pageModel.author}}
                     <hr />
-                    {{=it.metadata.author}} - {{=it.metadata.date}}
+                    {{=it.pageModel.author}} - {{=it.pageModel.date}}
                 {{?}}
             </div>
             <div class="main--footer">
                 <div class="main--footer--brand-label">
-                    {{=it.siteConfig.title}}
+                    {{=it.siteModel.title}}
                 </div>
                 <div class="main--footer--page-details">
-                    {{?it.siteConfig.copyright}}
-                        Copyright © {{=it.siteConfig.copyright.date}} {{=it.siteConfig.copyright.name}}
+                    {{?it.siteModel.copyright}}
+                        Copyright © {{=it.siteModel.copyright.date}} {{=it.siteModel.copyright.name}}
                     {{?}}
                 </div>
             </div>

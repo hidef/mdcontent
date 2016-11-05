@@ -30,28 +30,29 @@ async function main() {
     files.map(loadPage)
         .forEach(async (pp: Promise<Page>) => {
             var p = await pp;
-            
-            var fileName = trimLeft(p.path, workingDirectory);
-            
-            var chunks = splitContent(p.content);
-
-            var parsedMetadata = parseMetadata(chunks.metaDataChunk);
-
-            var pageModel = {
-                siteConfig: siteConfig,
-                content: marked(chunks.contentChunk),
-                metadata: parsedMetadata || {},
-                outputPath: 'dist/' + fileName.substr(0, fileName.lastIndexOf(".md")) + '.html'
-            };
-            renderFile(pageModel);
+            renderFile(p);
         });
 }
 
 async function loadPage(fileName: string): Promise<Page> {
     var data = await readFileAsync(fileName);
+        
+    var outputFileName = trimLeft(fileName, workingDirectory);
+    
+    var chunks = splitContent(data);
+
+    var parsedMetadata: any = parseMetadata(chunks.metaDataChunk) || {};
+
     return {
-        path: fileName,
-        content: data
+        sourcePath: fileName,
+        outputPath: 'dist/' + outputFileName.substr(0, outputFileName.lastIndexOf(".md")) + '.html',
+
+        content: marked(chunks.contentChunk),
+
+        author: parsedMetadata.author,
+        date: parsedMetadata.date,
+        tags: parsedMetadata.tags,
+        title: parsedMetadata.title
     } as Page;
 }
 
@@ -59,7 +60,8 @@ async function loadPage(fileName: string): Promise<Page> {
 
 class Page 
 {
-    path: string;
+    sourcePath: string;
+    outputPath: string;
     title: string;
     tags: string[];
     author: string;
@@ -126,13 +128,28 @@ function splitContent(data) {
     return { metaDataChunk, contentChunk };
 }
 
-function renderFile(pageModel)
+function renderFile(pageModel: Page)
 {
+    console.log('==========================================================================================================================================');
+    console.log();
+    
+    console.log('rendering', pageModel.outputPath);
+    try {
+        var output = dots.page({
+            siteModel: siteConfig,
+            pageModel
+        });
+    } catch (ex) {
+        console.log(ex);
+    }
 
-    var output = dots.page(pageModel);
+    console.log('ensureFilePathExists', pageModel.outputPath);
 
     ensureFilePathExists('.', pageModel.outputPath);
+    console.log('writeFileSync', pageModel.outputPath);
     fs.writeFileSync(pageModel.outputPath, output);
+    console.log('end');
+    console.log();
 }
 
 function ensureFilePathExists(workingDir, fileName)
