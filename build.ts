@@ -23,11 +23,9 @@ async function main() {
         fs.removeSync('dist');
     }
 
-    var files: string[] = await recursiveAsync(workingDirectory);
-    files = files
+    (await recursiveAsync(workingDirectory))
         .filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules'); })
-    
-    files.map(loadPage)
+        .map(loadPage)
         .forEach(async (pp: Promise<Page>) => {
             var p = await pp;
             renderFile(p);
