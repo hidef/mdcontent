@@ -4,28 +4,28 @@ var marked = require('marked');
 var removeMd = require('remove-markdown');
 var os = require('os');
 var fs = require('fs-extra');
-var dots = require("dot").process({ path: viewDir });
-
+var viewDir = (process.env.viewDir || '.') + "/views";
 
 // environment
-var viewDir = (process.env.viewDir || '.') + "/views";
+var dots = require("dot").process({ path: viewDir });
 var workingDirectory = process.env.workingDirectory || 'test-content';
 var siteConfig = JSON.parse(fs.readFileSync(workingDirectory + '/site.json'));
 
-// application
-if (fs.existsSync('dist'))
-{
-    fs.removeSync('dist');
-}
+main();
 
-recursive(workingDirectory, function (err, files) {
-    console.log(workingDirectory);
-    if (err) {
-        console.log(err);
-        process.exit(-1);
-    } else {
-        files = files.filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules'); });
-        files.forEach(f => {
+async function main() {
+
+    // application
+    if (fs.existsSync('dist'))
+    {
+        fs.removeSync('dist');
+    }
+
+    var files: string[] = await recursiveAsync(workingDirectory);
+
+    files
+        .filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules'); })
+        .forEach(f => {
             fs.readFile(f, function (err, data) {
                 if ( err ) {
                     console.log(err);
@@ -37,10 +37,19 @@ recursive(workingDirectory, function (err, files) {
                 }
             });
         });
-    }
-});
+}
 
 // Functions
+
+async function recursiveAsync(path: string): Promise<string[]> {
+    return new Promise<string[]>((resolve, reject) => {
+        recursive(path, (err, files) => {
+            if ( err ) reject(err);
+            resolve(files);
+        });
+    });
+}
+
 function trimLeft(input, trimValue) {
   var i = 0;
   while ( input.substr(i, trimValue.length) == trimValue ) {
