@@ -63,23 +63,6 @@ body {
   }
 }
 
-.main--footer--brand-label {
-    float: left;
-}
-
-.main--footer--page-details {
-    float: right;
-}
-
-@media (max-width: 900px) {
-.main--footer--brand-label {
-    float: none;
-}
-.main--footer--page-details {
-    float: none;
-  }
-}
-
 ul {
     padding-left: 1em;
 }

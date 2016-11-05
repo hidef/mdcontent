@@ -20,21 +20,20 @@
                 </a>
             </div>
             <div class="main--content">
-                {{=it.pageModel.content}}
+                {{?it.pageModel.title}}
+                    <h1>
+                        {{=it.pageModel.title}}
+                    </h1>
+                {{?}}
                 {{?it.pageModel.author}}
-                    <hr />
                     {{=it.pageModel.author}} - {{=it.pageModel.date}}
                 {{?}}
+                {{=it.pageModel.content}}
             </div>
             <div class="main--footer">
-                <div class="main--footer--brand-label">
-                    {{=it.siteModel.title}}
-                </div>
-                <div class="main--footer--page-details">
-                    {{?it.siteModel.copyright}}
-                        Copyright © {{=it.siteModel.copyright.date}} {{=it.siteModel.copyright.name}}
-                    {{?}}
-                </div>
+                {{?it.siteModel.footer}}
+                    {{=it.siteModel.footer}}
+                {{?}}
             </div>
         </div>
     </body>

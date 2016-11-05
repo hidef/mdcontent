@@ -12,10 +12,19 @@ var dots = require("dot").process({ path: viewDir });
 var workingDirectory = process.env.workingDirectory || 'test-content';
 var siteConfig = JSON.parse(fs.readFileSync(workingDirectory + '/site.json'));
 
-
-main();
+try {
+    main();
+} catch (ex) {
+    console.log(ex);
+    process.exit(-1);
+}
 
 async function main() {
+
+    if ( fs.existsSync(workingDirectory + '/_footer.md') ) {
+        var footerContent = fs.readFileSync(workingDirectory + '/_footer.md');
+        siteConfig.footer = marked(footerContent.toString('utf8'));
+    }
 
     // application
     if (fs.existsSync('dist'))
@@ -128,10 +137,6 @@ function splitContent(data: string) {
 
 function renderFile(pageModel: Page)
 {
-    console.log('==========================================================================================================================================');
-    console.log();
-    
-    console.log('rendering', pageModel.outputPath);
     try {
         var output = dots.page({
             siteModel: siteConfig,
@@ -141,13 +146,8 @@ function renderFile(pageModel: Page)
         console.log(ex);
     }
 
-    console.log('ensureFilePathExists', pageModel.outputPath);
-
     ensureFilePathExists('.', pageModel.outputPath);
-    console.log('writeFileSync', pageModel.outputPath);
     fs.writeFileSync(pageModel.outputPath, output);
-    console.log('end');
-    console.log();
 }
 
 function ensureFilePathExists(workingDir: string, fileName: string)
