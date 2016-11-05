@@ -33,7 +33,7 @@ async function main() {
     }
 
     (await recursiveAsync(workingDirectory))
-        .filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules'); })
+        .filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules') && !f.startsWith('_') && !(f.indexOf('/_') > -1); })
         .map(loadPage)
         .forEach(async (pp: Promise<Page>) => {
             var p = await pp;
