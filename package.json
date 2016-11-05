@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node build.js",
-    "start": "node serve.js"
+    "postinstall": "ts-node build.ts",
+    "start": "ts-node serve.ts"
   },
   "author": "Robert Stiff <mdcontent@hidefsoftware.co.uk>",
   "license": "MIT",
@@ -15,6 +15,9 @@
     "fs-extra": "^0.30.0",
     "marked": "^0.3.6",
     "recursive-readdir": "^2.1.0",
-    "remove-markdown": "^0.1.0"
+    "remove-markdown": "^0.1.0",
+    "ts-node": "^1.6.1",
+    "typescript": "^2.0.7",
+    "typings": "^1.5.0"
   }
 }

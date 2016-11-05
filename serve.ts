@@ -1,3 +1,5 @@
+/// <reference path="typings/index.d.ts" />
+
 var express = require('express');
 var app = express();
 

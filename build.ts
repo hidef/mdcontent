@@ -1,3 +1,4 @@
+/// <reference path="typings/index.d.ts" />
 var recursive = require('recursive-readdir');
 var marked = require('marked');
 var removeMd = require('remove-markdown');
