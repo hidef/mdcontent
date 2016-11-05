@@ -70,7 +70,7 @@ class Page
 // Functions
 async function readFileAsync(path: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-        fs.readFile(path, (err, data) => {
+        fs.readFile(path, (err: any, data: Buffer) => {
             if ( err ) reject(err);
             resolve(data.toString('utf8'));
         });
@@ -78,14 +78,14 @@ async function readFileAsync(path: string): Promise<string> {
 }
 async function recursiveAsync(path: string): Promise<string[]> {
     return new Promise<string[]>((resolve, reject) => {
-        recursive(path, (err, files) => {
+        recursive(path, (err: any, files: string[]) => {
             if ( err ) reject(err);
             resolve(files);
         });
     });
 }
 
-function trimLeft(input, trimValue) {
+function trimLeft(input: string, trimValue: string) {
   var i = 0;
   while ( input.substr(i, trimValue.length) == trimValue ) {
     i++;
@@ -93,19 +93,19 @@ function trimLeft(input, trimValue) {
   return input.substr(i + trimValue.length - 1);
 }
 
-function parseMetadata(metadatastring) {
+function parseMetadata(metadatastring: string) {
     var lines = metadatastring.split('\n');
-    var metadata = {};
+    var metadata: any = {};
     for ( var line of lines ) {
         if ( line.startsWith('---') ) continue;
-        if ( line.length == '0' ) continue;
+        if ( line.length == 0 ) continue;
         var parts = line.split(':');
         metadata[parts[0]] = line.substr(parts[0].length + 1).trim();
     }
     return metadata;
 }
 
-function splitContent(data) {
+function splitContent(data: string) {
     var lines = data.split('\n');
     var isMetaData = false;
     var metaDataChunk = '';
@@ -150,7 +150,7 @@ function renderFile(pageModel: Page)
     console.log();
 }
 
-function ensureFilePathExists(workingDir, fileName)
+function ensureFilePathExists(workingDir: string, fileName: string)
 {
     var firstSlash = fileName.indexOf('/');
     if ( firstSlash == -1 ) return;
