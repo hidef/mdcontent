@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="typings/index.d.ts" />
 var recursive = require('recursive-readdir');
 var marked = require('marked');
@@ -11,6 +12,7 @@ var dots = require("dot").process({ path: viewDir });
 var workingDirectory = process.env.workingDirectory || 'test-content';
 var siteConfig = JSON.parse(fs.readFileSync(workingDirectory + '/site.json'));
 
+
 main();
 
 async function main() {
@@ -22,12 +24,35 @@ async function main() {
     }
 
     var files: string[] = await recursiveAsync(workingDirectory);
-    files
+    files = files
         .filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules'); })
-        .forEach(async (f, i) => {
-            var data = await readFileAsync(f);
-            renderFile(trimLeft(f, workingDirectory), data);
+    
+    files.map(loadPage)
+        .forEach(async (pp: Promise<Page>) => {
+            var p = await pp;
+            renderFile(trimLeft(p.path, workingDirectory), p.content);
         });
+}
+
+async function loadPage(fileName: string): Promise<Page> {
+    var data = await readFileAsync(fileName);
+    return {
+        path: fileName,
+        content: data
+    } as Page;
+}
+
+// Types
+
+class Page 
+{
+    path: string;
+    title: string;
+    tags: string[];
+    author: string;
+
+    date: string;
+    content: string;
 }
 
 // Functions
