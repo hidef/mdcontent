@@ -30,7 +30,20 @@ async function main() {
     files.map(loadPage)
         .forEach(async (pp: Promise<Page>) => {
             var p = await pp;
-            renderFile(trimLeft(p.path, workingDirectory), p.content);
+            
+            var fileName = trimLeft(p.path, workingDirectory);
+            
+            var chunks = splitContent(p.content);
+
+            var parsedMetadata = parseMetadata(chunks.metaDataChunk);
+
+            var pageModel = {
+                siteConfig: siteConfig,
+                content: marked(chunks.contentChunk),
+                metadata: parsedMetadata || {},
+                outputPath: 'dist/' + fileName.substr(0, fileName.lastIndexOf(".md")) + '.html'
+            };
+            renderFile(pageModel);
         });
 }
 
@@ -50,7 +63,6 @@ class Page
     title: string;
     tags: string[];
     author: string;
-
     date: string;
     content: string;
 }
@@ -60,7 +72,7 @@ async function readFileAsync(path: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         fs.readFile(path, (err, data) => {
             if ( err ) reject(err);
-            resolve(data);
+            resolve(data.toString('utf8'));
         });
     });
 }
@@ -114,20 +126,13 @@ function splitContent(data) {
     return { metaDataChunk, contentChunk };
 }
 
-function renderFile(fileName, data)
+function renderFile(pageModel)
 {
-    var chunks = splitContent(data.toString('utf8'));
-    var parsedMetadata = parseMetadata(chunks.metaDataChunk);
 
-    var output = dots.page({
-        siteConfig: siteConfig,
-        content: marked(chunks.contentChunk),
-        metadata: parsedMetadata || {}
-    });
+    var output = dots.page(pageModel);
 
-    var outputFileName = 'dist/' + fileName.substr(0, fileName.lastIndexOf(".md")) + '.html';
-    ensureFilePathExists('.', outputFileName);
-    fs.writeFileSync(outputFileName, output);
+    ensureFilePathExists('.', pageModel.outputPath);
+    fs.writeFileSync(pageModel.outputPath, output);
 }
 
 function ensureFilePathExists(workingDir, fileName)
