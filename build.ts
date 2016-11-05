@@ -4,29 +4,19 @@ var marked = require('marked');
 var removeMd = require('remove-markdown');
 var os = require('os');
 var fs = require('fs-extra');
-
-
-
-var viewDir = (process.env.viewDir || '.') + "/views";
 var dots = require("dot").process({ path: viewDir });
+
+
+// environment
+var viewDir = (process.env.viewDir || '.') + "/views";
 var workingDirectory = process.env.workingDirectory || 'test-content';
-
-
 var siteConfig = JSON.parse(fs.readFileSync(workingDirectory + '/site.json'));
 
+// application
 if (fs.existsSync('dist'))
 {
     fs.removeSync('dist');
 }
-
-function trimLeft(input, trimValue) {
-  var i = 0;
-  while ( input.substr(i, trimValue.length) == trimValue ) {
-    i++;
-  }
-  return input.substr(i + trimValue.length - 1);
-}
-
 
 recursive(workingDirectory, function (err, files) {
     console.log(workingDirectory);
@@ -49,6 +39,15 @@ recursive(workingDirectory, function (err, files) {
         });
     }
 });
+
+// Functions
+function trimLeft(input, trimValue) {
+  var i = 0;
+  while ( input.substr(i, trimValue.length) == trimValue ) {
+    i++;
+  }
+  return input.substr(i + trimValue.length - 1);
+}
 
 function parseMetadata(metadatastring) {
     var lines = metadatastring.split('\n');
