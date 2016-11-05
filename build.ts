@@ -22,25 +22,23 @@ async function main() {
     }
 
     var files: string[] = await recursiveAsync(workingDirectory);
-
     files
         .filter(function(f) { return f.endsWith('.md') && !f.startsWith('node_modules'); })
-        .forEach(f => {
-            fs.readFile(f, function (err, data) {
-                if ( err ) {
-                    console.log(err);
-                    process.exit(-1);
-                } else {
-                    console.log(f);
-                    console.log(trimLeft(f, workingDirectory + '/'));
-                    renderFile(trimLeft(f, workingDirectory), data);
-                }
-            });
+        .forEach(async (f, i) => {
+            var data = await readFileAsync(f);
+            renderFile(trimLeft(f, workingDirectory), data);
         });
 }
 
 // Functions
-
+async function readFileAsync(path: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        fs.readFile(path, (err, data) => {
+            if ( err ) reject(err);
+            resolve(data);
+        });
+    });
+}
 async function recursiveAsync(path: string): Promise<string[]> {
     return new Promise<string[]>((resolve, reject) => {
         recursive(path, (err, files) => {
@@ -101,8 +99,6 @@ function renderFile(fileName, data)
         content: marked(chunks.contentChunk),
         metadata: parsedMetadata || {}
     });
-
-    console.log(parsedMetadata);
 
     var outputFileName = 'dist/' + fileName.substr(0, fileName.lastIndexOf(".md")) + '.html';
     ensureFilePathExists('.', outputFileName);
