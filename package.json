@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install": "typings install && tsc",
     "start": "ts-node build.ts && ts-node serve.ts"
   },
   "author": "Robert Stiff <mdcontent@hidefsoftware.co.uk>",
