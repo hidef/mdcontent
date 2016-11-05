@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "ts-node build.ts",
-    "start": "ts-node serve.ts"
+    "start": "ts-node build.ts && ts-node serve.ts"
   },
   "author": "Robert Stiff <mdcontent@hidefsoftware.co.uk>",
   "license": "MIT",
