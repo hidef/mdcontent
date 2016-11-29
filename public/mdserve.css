@@ -63,6 +63,11 @@ body {
   }
 }
 
+.main--social {
+    width: 1em;
+    height: 1em;
+}
+
 ul {
     padding-left: 1em;
 }

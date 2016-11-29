@@ -1,3 +1,8 @@
 {
-    "title": "MD Content Demo"
+    "title": "MD Content Demo",
+    "social": {
+        "twitter": "@twittaholic",
+        "linkedin": "ilikemyjob",
+        "github": "hidef/mdcontent"
+    }
 }
