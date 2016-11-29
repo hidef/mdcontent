@@ -33,6 +33,19 @@ body {
     color: black;
 }
 
+.main--header-menu ul {
+    padding-left: 0em;
+}
+
+.main--header-menu ul li {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.main--header-menu a {
+    font-size: 1.5em;
+}
+
 .main--content {
     padding: 1em 20% 1em 20%;
     border: 0px solid #DDD;

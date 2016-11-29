@@ -4,5 +4,10 @@
         "twitter": "@twittaholic",
         "linkedin": "ilikemyjob",
         "github": "hidef/mdcontent"
+    },
+    "mainMenu": {
+        "Thoughts": "/thoughts",
+        "Projects": "/projects",
+        "About": "/about"
     }
 }

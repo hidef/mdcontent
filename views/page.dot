@@ -18,6 +18,17 @@
                         {{=it.siteModel.title}}
                     </h1>
                 </a>
+                {{?it.siteModel.mainMenu}}
+                    <div class="main--header-menu">
+                        <ul>
+                            {{ for(var prop in it.siteModel.mainMenu) { }}
+                                <li>
+                                    <a href="{{=it.siteModel.mainMenu[prop]}}">{{=prop}}</a>
+                                </li>
+                            {{ } }}
+                        </ul>
+                    </div>
+                {{?}}
             </div>
             <div class="main--content">
                 {{?it.pageModel.title}}
