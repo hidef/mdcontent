@@ -76,9 +76,23 @@ body {
   }
 }
 
-.main--social {
+.main--social-icon {
     width: 1em;
     height: 1em;
+    top: 1px;
+    position: relative;
+}
+
+.main--social ul {
+    padding-left: 0em;
+}
+
+.main--social ul li {
+    display: block;
+}
+
+.main--social a {
+    text-decoration: none;
 }
 
 ul {
