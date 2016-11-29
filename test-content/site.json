@@ -6,8 +6,7 @@
         "github": "hidef/mdcontent"
     },
     "mainMenu": {
-        "Thoughts": "/thoughts",
-        "Projects": "/projects",
-        "About": "/about"
+        "Inner Folder": "/inner_folder/",
+        "Some Other File": "/some_other_file"
     }
 }
